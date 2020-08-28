@@ -7,11 +7,38 @@ CREATE TABLE client_snapshot(
     updated_timestamp bigint not null,
     primary key (id));
 
---INSERT INTO client_snapshot(name, description, updated_timestamp)
---VALUES('user1', 'actionType1', 0);
---
---INSERT INTO client_snapshot(name, description, updated_timestamp)
---VALUES('user2', 'actionType2', 0);
---
---INSERT INTO client_snapshot(name, description, updated_timestamp)
---VALUES('user3', 'actionType1', 0);
+INSERT INTO client_snapshot(name, description, updated_timestamp)
+VALUES('user1', 'actionType1', 0);
+
+INSERT INTO client_snapshot(name, description, updated_timestamp)
+VALUES('user2', 'actionType2', 2000);
+
+INSERT INTO client_snapshot(name, description, updated_timestamp)
+VALUES('user3', 'actionType1', 5000);
+
+INSERT INTO client_snapshot(name, description, updated_timestamp)
+VALUES('user1', 'actionType1', 0);
+
+INSERT INTO client_snapshot(name, description, updated_timestamp)
+VALUES('user2', 'actionType2', 2000);
+
+INSERT INTO client_snapshot(name, description, updated_timestamp)
+VALUES('user3', 'actionType1', 5000);
+
+INSERT INTO client_snapshot(name, description, updated_timestamp)
+VALUES('user1', 'actionType1', 0);
+
+INSERT INTO client_snapshot(name, description, updated_timestamp)
+VALUES('user2', 'actionType2', 2000);
+
+INSERT INTO client_snapshot(name, description, updated_timestamp)
+VALUES('user3', 'actionType1', 5000);
+
+INSERT INTO client_snapshot(name, description, updated_timestamp)
+VALUES('user1', 'actionType1', 0);
+
+INSERT INTO client_snapshot(name, description, updated_timestamp)
+VALUES('user2', 'actionType2', 2000);
+
+INSERT INTO client_snapshot(name, description, updated_timestamp)
+VALUES('user3', 'actionType1', 5000);

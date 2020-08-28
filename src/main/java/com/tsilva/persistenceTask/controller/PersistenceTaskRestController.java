@@ -37,4 +37,11 @@ public class PersistenceTaskRestController
     {
         return iUserService.getSnapShots(startTs, endTs, page);
     }
+
+    @RequestMapping(value = "/snapshot", method = RequestMethod.DELETE)
+    public JsonResponse<Void> deleteSnapshot(
+            @RequestParam(name = "id", required = true) Long id)
+    {
+        return iUserService.deleteSnapshotById(id);
+    }
 }

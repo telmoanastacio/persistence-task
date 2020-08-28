@@ -18,4 +18,6 @@ public interface IUserService
             long startTs,
             long endTs,
             @Nullable Integer page);
+
+    public JsonResponse<Void> deleteSnapshotById(long id);
 }

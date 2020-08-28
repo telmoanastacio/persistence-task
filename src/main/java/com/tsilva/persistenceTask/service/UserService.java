@@ -6,6 +6,7 @@ import com.tsilva.persistenceTask.persistence.dao.client.IClientSnapshotJpaRepos
 import com.tsilva.persistenceTask.service.maper.ClientSnapshotEntitiesToResponseMapper;
 import com.tsilva.persistenceTask.service.maper.ClientSnapshotEntityToResponseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
@@ -71,6 +72,27 @@ public class UserService implements IUserService
                     httpStatus.value(),
                     httpStatus.toString(),
                     null);
+        }
+
+        return response;
+    }
+
+    @Override
+    public JsonResponse<Void> deleteSnapshotById(long id)
+    {
+        HttpStatus httpStatus = null;
+        JsonResponse<Void> response = null;
+        try
+        {
+            iClientSnapshotJpaRepository.deleteById(id);
+
+            httpStatus = HttpStatus.OK;
+            response = new JsonResponse<>(httpStatus.value(), httpStatus.toString(), null);
+        }
+        catch (EntityNotFoundException | EmptyResultDataAccessException e)
+        {
+            httpStatus = HttpStatus.NOT_FOUND;
+            response = new JsonResponse<>(httpStatus.value(), httpStatus.toString(), null);
         }
 
         return response;

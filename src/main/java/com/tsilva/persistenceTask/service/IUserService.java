@@ -15,8 +15,7 @@ public interface IUserService
     public JsonResponse<ClientSnapshot> getSnapshotById(long id);
 
     public JsonResponse<List<ClientSnapshot>> getSnapShots(
-            long startTs,
-            long endTs,
+            long durationSeconds,
             @Nullable Integer page);
 
     public JsonResponse<Void> deleteSnapshotById(long id);

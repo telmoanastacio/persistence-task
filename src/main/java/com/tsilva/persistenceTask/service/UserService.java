@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Telmo Silva on 28.08.2020.
@@ -50,8 +52,12 @@ public class UserService implements IUserService
     }
 
     @Override
-    public JsonResponse<List<ClientSnapshot>> getSnapShots(long startTs, long endTs, @Nullable Integer page)
+    public JsonResponse<List<ClientSnapshot>> getSnapShots(long durationSeconds, @Nullable Integer page)
     {
+        Date now = new Date();
+        long startTs = now.getTime() - TimeUnit.SECONDS.toMillis(durationSeconds) / 2;
+        long endTs = now.getTime() + TimeUnit.SECONDS.toMillis(durationSeconds) / 2;
+
         HttpStatus httpStatus = null;
         JsonResponse<List<ClientSnapshot>> response = null;
         Collection<com.tsilva.persistenceTask.persistence.entity.client.ClientSnapshot> clientSnapshotCollection =

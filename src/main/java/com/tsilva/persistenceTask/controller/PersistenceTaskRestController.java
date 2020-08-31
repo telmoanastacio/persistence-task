@@ -29,13 +29,12 @@ public class PersistenceTaskRestController
         return iUserService.getSnapshotById(id);
     }
 
-    @RequestMapping(value = "/snapshots/{startTs}/{endTs}", method = RequestMethod.GET)
+    @RequestMapping(value = "/snapshots/{durationSeconds}", method = RequestMethod.GET)
     public JsonResponse<List<com.tsilva.persistenceTask.contract.client.ClientSnapshot>> getSnapShots(
-            @PathVariable(name = "startTs") Long startTs,
-            @PathVariable(name = "endTs") Long endTs,
+            @PathVariable(name = "durationSeconds") Long durationSeconds,
             @Nullable @RequestParam(name = "page", required = false) Integer page)
     {
-        return iUserService.getSnapShots(startTs, endTs, page);
+        return iUserService.getSnapShots(durationSeconds, page);
     }
 
     @RequestMapping(value = "/snapshot", method = RequestMethod.DELETE)

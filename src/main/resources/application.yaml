@@ -1,5 +1,7 @@
 logging:
   level:
+    com:
+      tsilva: debug
     org:
       springframework: info
 

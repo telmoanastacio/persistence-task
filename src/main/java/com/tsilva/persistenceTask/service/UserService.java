@@ -6,6 +6,8 @@ import com.tsilva.persistenceTask.persistence.dao.client.IClientSnapshotJpaRepos
 import com.tsilva.persistenceTask.service.maper.ClientSnapshotEntitiesToResponseMapper;
 import com.tsilva.persistenceTask.service.maper.ClientSnapshotEntityToResponseMapper;
 import com.tsilva.persistenceTask.service.maper.ClientSnapshotRequestToEntitiesMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class UserService implements IUserService
 {
+    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
+
     @Autowired
     private IClientSnapshotJpaRepository iClientSnapshotJpaRepository;
 
@@ -47,6 +51,8 @@ public class UserService implements IUserService
         {
             httpStatus = HttpStatus.NOT_FOUND;
             response = new JsonResponse<>(httpStatus.value(), httpStatus.toString(), null);
+
+            LOG.debug("No snapshot found for id: {}.", id);
         }
 
         return response;
@@ -79,6 +85,8 @@ public class UserService implements IUserService
                     httpStatus.value(),
                     httpStatus.toString(),
                     null);
+
+            LOG.debug("No snapshots found for durationSeconds: {}.", durationSeconds);
         }
 
         return response;
@@ -100,6 +108,8 @@ public class UserService implements IUserService
         {
             httpStatus = HttpStatus.NOT_FOUND;
             response = new JsonResponse<>(httpStatus.value(), httpStatus.toString(), null);
+
+            LOG.debug("Snapshot was not deleted. No snapshot found for id: {}.", id);
         }
 
         return response;
@@ -119,6 +129,7 @@ public class UserService implements IUserService
         else
         {
             httpStatus = HttpStatus.NOT_ACCEPTABLE;
+            LOG.debug("Snapshots not saved. Request body not valid.");
         }
         response = new JsonResponse<>(httpStatus.value(), httpStatus.toString(), null);
 
@@ -142,6 +153,8 @@ public class UserService implements IUserService
         {
             if(page <= 0)
             {
+                LOG.debug("Page not valid.");
+
                 return null;
             }
 
@@ -150,6 +163,8 @@ public class UserService implements IUserService
                     : -1;
             if(indexStart == -1)
             {
+                LOG.debug("Page not valid.");
+
                 return null;
             }
 

@@ -1,6 +1,9 @@
 package com.tsilva.persistenceTask.controller;
 
+import com.tsilva.persistenceTask.contract.client.ClientSnapshot;
 import com.tsilva.persistenceTask.contract.client.JsonResponse;
+import com.tsilva.persistenceTask.contract.tools.ClientSnapshotCsvParser;
+import com.tsilva.persistenceTask.contract.tools.IClientSnapshotCsvParser;
 import com.tsilva.persistenceTask.persistence.dao.client.IClientSnapshotJpaRepository;
 import com.tsilva.persistenceTask.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Created by Telmo Silva on 28.08.2020.
@@ -42,5 +47,15 @@ public class PersistenceTaskRestController
             @RequestParam(name = "id", required = true) Long id)
     {
         return iUserService.deleteSnapshotById(id);
+    }
+
+    @RequestMapping(value = "/post-snapshots", method = {POST})
+    public JsonResponse<Void> postSnapshots(
+            @RequestParam("snapshotCsv") String snapshotCsv)
+    {
+        IClientSnapshotCsvParser iClientSnapshotCsvParser = new ClientSnapshotCsvParser();
+        List<ClientSnapshot> clientSnapshotList = iClientSnapshotCsvParser.parse(snapshotCsv);
+
+        return iUserService.saveSnapshots(clientSnapshotList);
     }
 }

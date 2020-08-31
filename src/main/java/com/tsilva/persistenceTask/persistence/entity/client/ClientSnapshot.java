@@ -33,6 +33,14 @@ public class ClientSnapshot
         this.updatedTimestamp = updatedTimestamp;
     }
 
+    public ClientSnapshot(Long id, String name, String description, Long updatedTimestamp)
+    {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.updatedTimestamp = updatedTimestamp;
+    }
+
     public Long getId()
     {
         return id;

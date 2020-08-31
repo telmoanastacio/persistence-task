@@ -19,4 +19,6 @@ public interface IUserService
             @Nullable Integer page);
 
     public JsonResponse<Void> deleteSnapshotById(long id);
+
+    public JsonResponse<Void> saveSnapshots(List<ClientSnapshot> clientSnapshotList);
 }

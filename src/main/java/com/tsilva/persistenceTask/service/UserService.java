@@ -5,6 +5,7 @@ import com.tsilva.persistenceTask.contract.client.JsonResponse;
 import com.tsilva.persistenceTask.persistence.dao.client.IClientSnapshotJpaRepository;
 import com.tsilva.persistenceTask.service.maper.ClientSnapshotEntitiesToResponseMapper;
 import com.tsilva.persistenceTask.service.maper.ClientSnapshotEntityToResponseMapper;
+import com.tsilva.persistenceTask.service.maper.ClientSnapshotRequestToEntitiesMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -95,11 +96,31 @@ public class UserService implements IUserService
             httpStatus = HttpStatus.OK;
             response = new JsonResponse<>(httpStatus.value(), httpStatus.toString(), null);
         }
-        catch (EntityNotFoundException | EmptyResultDataAccessException e)
+        catch (EmptyResultDataAccessException e)
         {
             httpStatus = HttpStatus.NOT_FOUND;
             response = new JsonResponse<>(httpStatus.value(), httpStatus.toString(), null);
         }
+
+        return response;
+    }
+
+    @Override
+    public JsonResponse<Void> saveSnapshots(List<ClientSnapshot> clientSnapshotList)
+    {
+        HttpStatus httpStatus = null;
+        JsonResponse<Void> response = null;
+        if(clientSnapshotList != null)
+        {
+            iClientSnapshotJpaRepository.saveAll(new ClientSnapshotRequestToEntitiesMapper(clientSnapshotList).map());
+
+            httpStatus = HttpStatus.OK;
+        }
+        else
+        {
+            httpStatus = HttpStatus.NOT_ACCEPTABLE;
+        }
+        response = new JsonResponse<>(httpStatus.value(), httpStatus.toString(), null);
 
         return response;
     }
